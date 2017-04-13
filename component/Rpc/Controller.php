@@ -14,11 +14,14 @@
 
 namespace Trensy\Component\Rpc;
 
+use Trensy\Foundation\Shortcut;
 use Trensy\Support\Arr;
 use Trensy\Support\ElapsedTime;
 
 class Controller
 {
+
+    use Shortcut;
 
     const RESPONSE_SUCCESS_CODE = 200;
     const RESPONSE_NORMAL_ERROR_CODE = 500;
@@ -72,7 +75,7 @@ class Controller
     public function response($data, $errorCode = self::RESPONSE_SUCCESS_CODE, $errorMsg = '')
     {
         $data = $this->render($data, $errorCode, $errorMsg);
-        $config = config()->get("server.rpc");
+        $config = $this->config()->get("server.rpc");
         $defaultConfig = [
             'daemonize' => 0,
             //worker数量，推荐设置和cpu核数相等
