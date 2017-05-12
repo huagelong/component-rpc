@@ -128,8 +128,10 @@ class RpcBase
                 Log::sysinfo("$serverName stop success ");
                 break;
             case 'restart':
-                self::stop($appName);
-                self::start($config, $root, $appName);
+                $result = self::stop($appName);
+                if($result){
+                    self::start($config, $root, $appName);
+                }
                 break;
             case 'reload':
                 self::reload($appName);
@@ -144,14 +146,16 @@ class RpcBase
     protected static function reload($appName)
     {
         $killStr = $appName . "-rpc-manage";
-        exec("ps axu|grep " . $killStr . "|grep -v grep|awk '{print $2}'|xargs kill -USR1");
+        exec("ps axu|grep " . $killStr . "|grep -v grep|awk '{print $2}'|xargs kill -USR1", $out, $result);
+        return $result;
     }
 
     protected static function stop($appName)
     {
         $killStr = $appName . "-rpc";
-        exec("ps axu|grep " . $killStr . "|grep -v grep|awk '{print $2}'|xargs kill -9");
+        exec("ps axu|grep " . $killStr . "|grep -v grep|awk '{print $2}'|xargs kill -9", $out, $result);
         sleep(1);
+        return $result;
     }
 
     protected static function start($config, $root, $appName)
