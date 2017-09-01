@@ -26,16 +26,9 @@ class Controller
     const RESPONSE_SUCCESS_CODE = 200;
     const RESPONSE_NORMAL_ERROR_CODE = 500;
 
-    private $server = null;
-    private $fd = null;
-    private $params = null;
-
-    public function __construct($server, $fd, $params)
-    {
-        $this->server = $server;
-        $this->fd = $fd;
-        $this->params = $params;
-    }
+    public $server = null;
+    public $fd = null;
+    public $params = null;
 
 
     public function getParams()
