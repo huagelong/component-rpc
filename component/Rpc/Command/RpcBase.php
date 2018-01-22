@@ -18,6 +18,7 @@ use Trensy\Component\Rpc\RpcServer;
 use Trensy\Support\Arr;
 use Trensy\Support\Dir;
 use Trensy\Support\ElapsedTime;
+use Trensy\Support\Exception;
 use Trensy\Support\Log;
 
 class RpcBase
@@ -60,8 +61,11 @@ class RpcBase
             exit(0);
         }
         
-
-        self::doOperate($cmd, $config, $root, $appName, $output);
+        try{
+            self::doOperate($cmd, $config, $root, $appName, $output);
+        }catch (\Exception $e){
+            Log::error(Exception::formatException($e));
+        }
     }
 
 
